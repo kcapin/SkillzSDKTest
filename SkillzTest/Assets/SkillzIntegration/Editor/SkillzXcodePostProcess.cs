@@ -1,4 +1,4 @@
-﻿#if UNITY_ANDROID
+﻿#if UNITY_IOS
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -52,7 +52,8 @@ public static class SkillzXcodeAdditions
             string target = pbxProject.TargetGuidByName(targetName);
             // Disable BITCODE for Skillz
             pbxProject.SetBuildProperty(target, "ENABLE_BITCODE", "NO");
-            //pbxProject.AddFrameworkToProject(target, "PassKit.framework", true);
+            pbxProject.AddFrameworkToProject(target, "PassKit.framework", true);
+            pbxProject.AddFrameworkToProject(target, "Skillz.framework", false);
             // add apple pay capability
             //pbxProject.AddCapability(target, PBXCapabilityType.ApplePay, entitlementsPath);
             //pbxProject.AddCapability(target, PBXCapabilityType.PushNotifications, entitlementsPath);
@@ -68,11 +69,11 @@ public static class SkillzXcodeAdditions
             File.WriteAllText(projectPath, contents);
 
             // add apple pay merchant id
-            ProjectCapabilityManager capabilities = new ProjectCapabilityManager(projectPath, entitlementsPath, targetName);
-            capabilities.AddApplePay(new string[] { "merchant.com.freerange.skillzSdkTest" });
+            //ProjectCapabilityManager capabilities = new ProjectCapabilityManager(projectPath, entitlementsPath, targetName);
+            //capabilities.AddApplePay(new string[] { "merchant.com.freerange.skillzSdkTest" });
             // add push notifications entitlement
-            capabilities.AddPushNotifications(false);
-            capabilities.WriteToFile();
+            //capabilities.AddPushNotifications(false);
+            //capabilities.WriteToFile();
 
             // app only uses https for login etc.  Set export encryption to false
             PlistDocument plist = new PlistDocument(); // Read Info.plist file into memory

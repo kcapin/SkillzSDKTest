@@ -4,7 +4,8 @@ public class MainMenuManager : MonoBehaviour
 {
     public void LaunchSkillz()
     {
-        SkillzCrossPlatform.LaunchSkillz(new GameController());
+        var _controller = new GameController();
+        SkillzCrossPlatform.LaunchSkillz(_controller);
     }
 
     public void Exit()
