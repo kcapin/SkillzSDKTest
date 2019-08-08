@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
     public void LaunchSkillz()
     {
-        var _controller = new GameController();
-        SkillzCrossPlatform.LaunchSkillz(_controller);
+        SceneManager.LoadScene(GameManager.Instance.GameSceneName);
     }
 
     public void Exit()

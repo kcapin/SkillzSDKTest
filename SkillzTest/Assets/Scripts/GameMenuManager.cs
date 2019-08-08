@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class GameMenuManager : MonoBehaviour
@@ -9,10 +10,11 @@ public class GameMenuManager : MonoBehaviour
     private TextMeshProUGUI gameOverScoreText;
 
     private int score;
+    private bool finished = false;
 
     public void AddScore(int _score)
     {
-        if (score >= 10) return;
+        if (finished) return;
 
         score += _score;
         currentScoreText.text = "Score: " + score.ToString();
@@ -25,22 +27,21 @@ public class GameMenuManager : MonoBehaviour
 
     public void Forfeit()
     {
-        SkillzCrossPlatform.AbortMatch();
+        Finish();
     }
 
     public void Finish()
     {
+        if (finished) return;
+        finished = !finished;
         gameOverScoreText.text = "YOUR SCORE" + "\r\n" + score.ToString();
         gameOverScoreText.gameObject.SetActive(true);
 
-        Invoke("reportScore", 3f);
+        Invoke("end", 3f);
     }
 
-    private void reportScore()
+    private void end()
     {
-        if (SkillzCrossPlatform.IsMatchInProgress())
-        {
-            SkillzCrossPlatform.ReportFinalScore(score.ToString());
-        }
+        SceneManager.LoadScene(GameManager.Instance.MenuSceneName);
     }
 }
